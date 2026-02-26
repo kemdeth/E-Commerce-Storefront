@@ -14,7 +14,7 @@ pixelmarket/
 │
 ├── js/
 │   ├── data.js         ← Product & bundle data arrays
-│   ├── icons.js        ← SVG icon components (no emoji)
+│   ├── icons.js        ← SVG icon components 
 │   ├── components.js   ← All React components + CartContext + hooks
 │   └── app.js          ← Root App component, ReactDOM.render
 │
