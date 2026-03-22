@@ -1,0 +1,2086 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PixelMarket – Digital Products</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjN2M2ZmY3Ii8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjYzA4NGZjIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0idXJsKCNnKSIvPjxwYXRoIGQ9Ik0xNiw2IFExOC41LDEzLjUgMjYsMTYgUTE4LjUsMTguNSAxNiwyNiBRMTMuNSwxOC41IDYsMTYgUTEzLjUsMTMuNSAxNiw2IFoiIGZpbGw9IndoaXRlIi8+PC9zdmc+"
+      type="image/svg+xml"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg: #08080f;
+        --surface: #111118;
+        --surface2: #18181f;
+        --surface3: #202028;
+        --border: rgba(255, 255, 255, 0.07);
+        --border2: rgba(255, 255, 255, 0.12);
+        --accent: #7c6ff7;
+        --accent-dim: rgba(124, 111, 247, 0.15);
+        --accent-hover: #6a5ef5;
+        --green: #34d399;
+        --green-dim: rgba(52, 211, 153, 0.12);
+        --red: #f87171;
+        --red-dim: rgba(248, 113, 113, 0.12);
+        --orange: #fb923c;
+        --orange-dim: rgba(251, 146, 60, 0.12);
+        --text: #eeeef5;
+        --text2: #a0a0c0;
+        --text3: #606080;
+        --radius: 14px;
+        --radius-sm: 8px;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 9999;
+      }
+
+      #root {
+        min-height: 100vh;
+      }
+
+      /* SCROLLBAR */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--surface3);
+        border-radius: 3px;
+      }
+
+      /* ── HEADER ── */
+      .header {
+        position: sticky;
+        top: 0;
+        z-index: 200;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 2.5rem;
+        height: 64px;
+        background: rgba(8, 8, 15, 0.8);
+        backdrop-filter: blur(24px);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .logo {
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: 1.25rem;
+        letter-spacing: -0.5px;
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        text-decoration: none;
+        color: var(--text);
+      }
+
+      .logo-mark {
+        width: 30px;
+        height: 30px;
+        background: linear-gradient(135deg, var(--accent), #c084fc);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .nav-link {
+        color: var(--text2);
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-decoration: none;
+        padding: 0.4rem 0.75rem;
+        border-radius: var(--radius-sm);
+        transition:
+          color 0.2s,
+          background 0.2s;
+        cursor: pointer;
+        background: none;
+        border: none;
+        font-family: "DM Sans", sans-serif;
+      }
+
+      .nav-link:hover {
+        color: var(--text);
+        background: var(--surface2);
+      }
+
+      .cart-trigger {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--surface2);
+        border: 1px solid var(--border2);
+        color: var(--text);
+        padding: 0.45rem 1rem;
+        border-radius: var(--radius-sm);
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition:
+          border-color 0.2s,
+          background 0.2s;
+        font-family: "DM Sans", sans-serif;
+      }
+
+      .cart-trigger:hover {
+        border-color: var(--accent);
+        background: var(--surface3);
+      }
+
+      .cart-badge {
+        background: var(--accent);
+        color: white;
+        min-width: 20px;
+        height: 20px;
+        border-radius: 10px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 5px;
+        transition: transform 0.2s;
+      }
+
+      .cart-badge.bump {
+        animation: bump 0.3s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+      }
+
+      @keyframes bump {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.4);
+        }
+      }
+
+      /* ── HERO ── */
+      .hero {
+        padding: 6rem 2.5rem 5rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-glow {
+        position: absolute;
+        top: -80px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 700px;
+        height: 400px;
+        background: radial-gradient(
+          ellipse at center,
+          rgba(124, 111, 247, 0.2) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+
+      .hero-glow2 {
+        position: absolute;
+        top: 50px;
+        right: -100px;
+        width: 400px;
+        height: 300px;
+        background: radial-gradient(
+          ellipse at center,
+          rgba(192, 132, 252, 0.1) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+
+      .hero-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: var(--accent-dim);
+        border: 1px solid rgba(124, 111, 247, 0.25);
+        color: #a5a0ff;
+        font-size: 0.78rem;
+        font-weight: 500;
+        padding: 0.3rem 0.85rem;
+        border-radius: 100px;
+        margin-bottom: 2rem;
+        letter-spacing: 0.3px;
+      }
+
+      .hero-chip::before {
+        content: "✦";
+        font-size: 0.6rem;
+      }
+
+      .hero h1 {
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: clamp(2.8rem, 6vw, 4.5rem);
+        line-height: 1.08;
+        letter-spacing: -2px;
+        margin-bottom: 1.3rem;
+      }
+
+      .hero h1 .grad {
+        background: linear-gradient(90deg, var(--accent), #c084fc, #e879f9);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .hero-sub {
+        color: var(--text2);
+        font-size: 1.05rem;
+        font-weight: 300;
+        max-width: 460px;
+        margin: 0 auto 2.5rem;
+        line-height: 1.65;
+      }
+
+      .hero-btns {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.75rem;
+        border-radius: var(--radius-sm);
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        font-family: "DM Sans", sans-serif;
+        transition:
+          background 0.2s,
+          transform 0.15s,
+          box-shadow 0.2s;
+        box-shadow: 0 0 0 0 rgba(124, 111, 247, 0.4);
+      }
+
+      .btn-primary:hover {
+        background: var(--accent-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(124, 111, 247, 0.35);
+      }
+
+      .btn-ghost {
+        background: transparent;
+        color: var(--text2);
+        border: 1px solid var(--border2);
+        padding: 0.75rem 1.75rem;
+        border-radius: var(--radius-sm);
+        font-size: 0.9rem;
+        font-weight: 500;
+        cursor: pointer;
+        font-family: "DM Sans", sans-serif;
+        transition:
+          color 0.2s,
+          border-color 0.2s;
+      }
+
+      .btn-ghost:hover {
+        color: var(--text);
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+
+      /* ── STATS ── */
+      .stats-bar {
+        display: flex;
+        justify-content: center;
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        padding: 1.75rem 2.5rem;
+        gap: 0;
+      }
+
+      .stat {
+        flex: 1;
+        max-width: 200px;
+        text-align: center;
+        padding: 0 1.5rem;
+        border-right: 1px solid var(--border);
+      }
+
+      .stat:last-child {
+        border-right: none;
+      }
+
+      .stat-num {
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 1.6rem;
+        letter-spacing: -0.5px;
+      }
+
+      .stat-label {
+        font-size: 0.75rem;
+        color: var(--text3);
+        margin-top: 0.2rem;
+      }
+
+      /* ── PRODUCTS ── */
+      .products-section {
+        padding: 4rem 2.5rem 5rem;
+      }
+
+      .section-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1.5rem;
+        margin-bottom: 2.5rem;
+        flex-wrap: wrap;
+      }
+
+      .section-label {
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 1.4rem;
+        letter-spacing: -0.4px;
+      }
+
+      .section-sub {
+        color: var(--text3);
+        font-size: 0.82rem;
+        margin-top: 0.3rem;
+      }
+
+      /* SEARCH */
+      .search-wrap {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      .search-box {
+        position: relative;
+      }
+
+      .search-icon {
+        position: absolute;
+        left: 0.9rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text3);
+        font-size: 0.85rem;
+        pointer-events: none;
+      }
+
+      .search-input {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.85rem;
+        padding: 0.55rem 0.9rem 0.55rem 2.3rem;
+        border-radius: var(--radius-sm);
+        width: 220px;
+        outline: none;
+        transition:
+          border-color 0.2s,
+          background 0.2s;
+      }
+
+      .search-input::placeholder {
+        color: var(--text3);
+      }
+
+      .search-input:focus {
+        border-color: var(--accent);
+        background: var(--surface3);
+      }
+
+      /* FILTER PILLS */
+      .filter-pills {
+        display: flex;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+      }
+
+      .pill {
+        padding: 0.38rem 0.9rem;
+        border-radius: 100px;
+        font-size: 0.78rem;
+        font-weight: 500;
+        border: 1px solid var(--border);
+        background: transparent;
+        color: var(--text3);
+        cursor: pointer;
+        font-family: "DM Sans", sans-serif;
+        transition: all 0.2s;
+      }
+
+      .pill:hover {
+        color: var(--text);
+        border-color: var(--border2);
+      }
+
+      .pill.active {
+        background: var(--accent-dim);
+        border-color: rgba(124, 111, 247, 0.35);
+        color: #a5a0ff;
+      }
+
+      /* PRODUCT GRID */
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+        gap: 1.25rem;
+      }
+
+      .product-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        position: relative;
+        overflow: hidden;
+        transition:
+          border-color 0.25s,
+          transform 0.2s,
+          box-shadow 0.25s;
+        animation: fadeUp 0.45s ease both;
+      }
+
+      .product-card:hover {
+        border-color: rgba(124, 111, 247, 0.35);
+        transform: translateY(-4px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      .product-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(124, 111, 247, 0.04) 0%,
+          transparent 60%
+        );
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .product-card:hover::before {
+        opacity: 1;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .card-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1.2rem;
+      }
+
+      .product-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.35rem;
+      }
+
+      .product-badge {
+        font-size: 0.68rem;
+        font-weight: 600;
+        padding: 0.22rem 0.6rem;
+        border-radius: 4px;
+        letter-spacing: 0.4px;
+        text-transform: uppercase;
+      }
+
+      .badge-popular {
+        background: var(--accent-dim);
+        color: #a5a0ff;
+        border: 1px solid rgba(124, 111, 247, 0.2);
+      }
+      .badge-new {
+        background: var(--green-dim);
+        color: var(--green);
+        border: 1px solid rgba(52, 211, 153, 0.2);
+      }
+      .badge-sale {
+        background: var(--red-dim);
+        color: var(--red);
+        border: 1px solid rgba(248, 113, 113, 0.2);
+      }
+
+      .product-name {
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 1rem;
+        letter-spacing: -0.2px;
+        margin-bottom: 0.4rem;
+      }
+
+      .product-desc {
+        font-size: 0.82rem;
+        color: var(--text2);
+        line-height: 1.55;
+        margin-bottom: 0.8rem;
+      }
+
+      .product-tags {
+        display: flex;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+        margin-bottom: 1.4rem;
+      }
+
+      .tag {
+        font-size: 0.7rem;
+        color: var(--text3);
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        padding: 0.18rem 0.55rem;
+        border-radius: 4px;
+      }
+
+      .card-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .price {
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 1.35rem;
+        letter-spacing: -0.5px;
+      }
+
+      .price-note {
+        font-size: 0.7rem;
+        color: var(--text3);
+        margin-top: 0.1rem;
+      }
+
+      .add-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: var(--surface2);
+        border: 1px solid var(--border2);
+        color: var(--text);
+        padding: 0.55rem 1.1rem;
+        border-radius: var(--radius-sm);
+        font-size: 0.82rem;
+        font-weight: 600;
+        cursor: pointer;
+        font-family: "DM Sans", sans-serif;
+        transition: all 0.2s;
+        white-space: nowrap;
+      }
+
+      .add-btn:hover:not(.in-cart) {
+        background: var(--accent);
+        border-color: var(--accent);
+        transform: scale(1.04);
+      }
+
+      .add-btn.in-cart {
+        background: var(--green-dim);
+        border-color: rgba(52, 211, 153, 0.3);
+        color: var(--green);
+        cursor: default;
+      }
+
+      /* EMPTY STATE */
+      .empty-state {
+        grid-column: 1/-1;
+        text-align: center;
+        padding: 5rem 2rem;
+      }
+
+      .empty-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        opacity: 0.4;
+      }
+      .empty-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text2);
+      }
+      .empty-sub {
+        font-size: 0.85rem;
+        color: var(--text3);
+        margin-top: 0.4rem;
+      }
+
+      /* SKELETON LOADER */
+      .skeleton-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.5rem;
+      }
+
+      .skel {
+        background: linear-gradient(
+          90deg,
+          var(--surface2) 25%,
+          var(--surface3) 50%,
+          var(--surface2) 75%
+        );
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+        border-radius: 6px;
+      }
+
+      @keyframes shimmer {
+        0% {
+          background-position: 200% 0;
+        }
+        100% {
+          background-position: -200% 0;
+        }
+      }
+
+      /* ── CART DRAWER ── */
+      .drawer-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+        z-index: 300;
+        animation: fadeIn 0.2s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .drawer {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 420px;
+        max-width: 95vw;
+        background: var(--surface);
+        border-left: 1px solid var(--border);
+        z-index: 301;
+        display: flex;
+        flex-direction: column;
+        animation: slideIn 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+
+      .drawer-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.5rem 1.75rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .drawer-title {
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 1.1rem;
+      }
+
+      .drawer-count {
+        color: var(--text3);
+        font-size: 0.85rem;
+        margin-top: 0.1rem;
+      }
+
+      .close-btn {
+        width: 32px;
+        height: 32px;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        color: var(--text2);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 1rem;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+
+      .close-btn:hover {
+        background: var(--surface3);
+        color: var(--text);
+      }
+
+      .drawer-items {
+        flex: 1;
+        overflow-y: auto;
+        padding: 1.25rem 1.75rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .cart-item {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 1rem 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        animation: fadeUp 0.25s ease;
+      }
+
+      .cart-item-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        flex-shrink: 0;
+      }
+
+      .cart-item-info {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .cart-item-name {
+        font-weight: 600;
+        font-size: 0.88rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .cart-item-price {
+        color: var(--text3);
+        font-size: 0.78rem;
+        margin-top: 0.15rem;
+      }
+
+      .qty-controls {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .qty-btn {
+        width: 26px;
+        height: 26px;
+        background: var(--surface3);
+        border: 1px solid var(--border2);
+        color: var(--text);
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition:
+          background 0.15s,
+          border-color 0.15s;
+        font-family: "DM Sans", sans-serif;
+      }
+
+      .qty-btn:hover {
+        background: var(--accent);
+        border-color: var(--accent);
+      }
+
+      .qty-num {
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 0.9rem;
+        min-width: 18px;
+        text-align: center;
+      }
+
+      .remove-btn {
+        background: none;
+        border: none;
+        color: var(--text3);
+        cursor: pointer;
+        font-size: 0.9rem;
+        padding: 4px;
+        border-radius: 4px;
+        transition: color 0.2s;
+      }
+
+      .remove-btn:hover {
+        color: var(--red);
+      }
+
+      /* CART EMPTY */
+      .cart-empty {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        text-align: center;
+        padding: 2rem;
+      }
+
+      .cart-empty-icon {
+        font-size: 3rem;
+        opacity: 0.25;
+      }
+      .cart-empty-title {
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 1rem;
+      }
+      .cart-empty-sub {
+        font-size: 0.82rem;
+        color: var(--text3);
+      }
+
+      .drawer-footer {
+        padding: 1.5rem 1.75rem;
+        border-top: 1px solid var(--border);
+      }
+
+      .total-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.1rem;
+      }
+
+      .total-label {
+        color: var(--text2);
+        font-size: 0.85rem;
+      }
+
+      .total-amount {
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: 1.5rem;
+        letter-spacing: -0.5px;
+      }
+
+      .checkout-btn {
+        width: 100%;
+        padding: 0.9rem;
+        background: var(--accent);
+        color: white;
+        border: none;
+        border-radius: var(--radius-sm);
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 0.95rem;
+        cursor: pointer;
+        letter-spacing: -0.2px;
+        transition:
+          background 0.2s,
+          transform 0.15s,
+          box-shadow 0.2s;
+      }
+
+      .checkout-btn:hover {
+        background: var(--accent-hover);
+        transform: translateY(-1px);
+        box-shadow: 0 8px 20px rgba(124, 111, 247, 0.35);
+      }
+
+      .checkout-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+
+      .secure-note {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        color: var(--text3);
+        font-size: 0.75rem;
+        margin-top: 0.85rem;
+      }
+
+      /* ── TOAST ── */
+      .toast-wrap {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        z-index: 400;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-end;
+      }
+
+      .toast {
+        background: var(--surface2);
+        border: 1px solid rgba(52, 211, 153, 0.25);
+        border-radius: var(--radius-sm);
+        padding: 0.8rem 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-size: 0.84rem;
+        font-weight: 500;
+        animation: toastIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      }
+
+      @keyframes toastIn {
+        from {
+          opacity: 0;
+          transform: translateY(12px) scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      @keyframes toastOut {
+        from {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+        to {
+          opacity: 0;
+          transform: translateY(4px) scale(0.97);
+        }
+      }
+
+      .toast.removing {
+        animation: toastOut 0.25s ease forwards;
+      }
+
+      /* ── FOOTER ── */
+      .footer {
+        border-top: 1px solid var(--border);
+        padding: 4rem 2.5rem 2rem;
+      }
+
+      .footer-top {
+        display: flex;
+        gap: 4rem;
+        margin-bottom: 3rem;
+        flex-wrap: wrap;
+      }
+
+      .footer-brand {
+        flex: 0 0 220px;
+      }
+
+      .footer-logo {
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+        color: var(--text);
+        margin-bottom: 0.9rem;
+      }
+
+      .footer-logo-mark {
+        width: 22px;
+        height: 22px;
+        background: linear-gradient(135deg, var(--accent), #c084fc);
+        border-radius: 5px;
+        flex-shrink: 0;
+      }
+
+      .footer-tagline {
+        font-size: 0.8rem;
+        color: var(--text3);
+        line-height: 1.6;
+        margin-bottom: 1.1rem;
+      }
+
+      .footer-socials {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .social-btn {
+        width: 32px;
+        height: 32px;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text3);
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-decoration: none;
+        transition:
+          color 0.2s,
+          border-color 0.2s,
+          background 0.2s;
+      }
+
+      .social-btn:hover {
+        color: var(--text);
+        border-color: var(--border2);
+        background: var(--surface3);
+      }
+
+      .footer-cols {
+        flex: 1;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+        min-width: 0;
+      }
+
+      .footer-col-heading {
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 0.78rem;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        color: var(--text2);
+        margin-bottom: 1rem;
+      }
+
+      .footer-col-links {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.55rem;
+      }
+
+      .footer-link {
+        font-size: 0.83rem;
+        color: var(--text3);
+        text-decoration: none;
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        font-family: "DM Sans", sans-serif;
+        text-align: left;
+        transition: color 0.15s;
+      }
+
+      .footer-link:hover {
+        color: var(--text);
+      }
+
+      .footer-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 1.75rem;
+        border-top: 1px solid var(--border);
+        color: var(--text3);
+        font-size: 0.78rem;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+
+      .footer-bottom-links {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+      }
+
+      .footer-link-sm {
+        font-size: 0.78rem;
+        color: var(--text3);
+        text-decoration: none;
+        transition: color 0.15s;
+      }
+
+      .footer-link-sm:hover {
+        color: var(--text);
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 900px) {
+        .footer-cols {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 640px) {
+        .header {
+          padding: 0 1.25rem;
+        }
+        .hero {
+          padding: 4rem 1.25rem 3.5rem;
+        }
+        .stats-bar {
+          gap: 0;
+          padding: 1.5rem;
+        }
+        .stat {
+          padding: 0 1rem;
+        }
+        .products-section {
+          padding: 3rem 1.25rem 4rem;
+        }
+        .section-top {
+          flex-direction: column;
+        }
+        .search-input {
+          width: 100%;
+        }
+        .nav-links .nav-link:not(.cart-trigger) {
+          display: none;
+        }
+        .footer {
+          padding: 3rem 1.25rem 1.5rem;
+        }
+        .footer-top {
+          flex-direction: column;
+          gap: 2.5rem;
+        }
+        .footer-brand {
+          flex: none;
+        }
+        .footer-cols {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .footer-bottom {
+          flex-direction: column;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const {
+        useState,
+        useEffect,
+        useContext,
+        createContext,
+        useCallback,
+        useRef,
+      } = React;
+
+      // ─────────────────────────────────────────────
+      // DATA
+      // ─────────────────────────────────────────────
+      const PRODUCTS = [
+        {
+          id: 1,
+          name: "Landing Page UI Kit",
+          price: 12,
+          description:
+            "Modern UI kit for landing pages and startups. Includes 40+ components.",
+          category: "UI Kits",
+          icon: "⚡",
+          iconBg: "rgba(124,111,247,0.15)",
+          iconColor: "#a5a0ff",
+          badge: "popular",
+          tags: ["Figma", "40+ Screens"],
+        },
+        {
+          id: 2,
+          name: "Portfolio Template",
+          price: 18,
+          description:
+            "Responsive portfolio template built for developers who want to stand out.",
+          category: "Templates",
+          icon: "💼",
+          iconBg: "rgba(52,211,153,0.12)",
+          iconColor: "#34d399",
+          badge: "new",
+          tags: ["HTML/CSS", "Dark Mode"],
+        },
+        {
+          id: 3,
+          name: "Admin Dashboard UI",
+          price: 25,
+          description:
+            "Clean, data-rich admin design system with charts, tables and forms.",
+          category: "UI Kits",
+          icon: "📊",
+          iconBg: "rgba(251,146,60,0.12)",
+          iconColor: "#fb923c",
+          badge: null,
+          tags: ["React", "Charts"],
+        },
+        {
+          id: 4,
+          name: "Mobile App UI Pack",
+          price: 15,
+          description:
+            "Reusable mobile components for iOS and Android app interfaces.",
+          category: "UI Kits",
+          icon: "📱",
+          iconBg: "rgba(248,113,113,0.12)",
+          iconColor: "#f87171",
+          badge: "sale",
+          tags: ["Swift", "Kotlin"],
+        },
+        {
+          id: 5,
+          name: "Icon Pack (500 icons)",
+          price: 8,
+          description:
+            "Minimal, consistent icon set in SVG and PNG — perfect for any project.",
+          category: "Icons",
+          icon: "✦",
+          iconBg: "rgba(192,132,252,0.12)",
+          iconColor: "#c084fc",
+          badge: null,
+          tags: ["SVG", "PNG", "500 icons"],
+        },
+        {
+          id: 6,
+          name: "SaaS Landing Kit",
+          price: 22,
+          description:
+            "Complete SaaS marketing site kit with hero, pricing, FAQ and more.",
+          category: "Templates",
+          icon: "🚀",
+          iconBg: "rgba(56,189,248,0.12)",
+          iconColor: "#38bdf8",
+          badge: "new",
+          tags: ["Tailwind", "10 Sections"],
+        },
+      ];
+
+      const CATEGORIES = ["All", "UI Kits", "Templates", "Icons"];
+
+      // ─────────────────────────────────────────────
+      // CONTEXT
+      // ─────────────────────────────────────────────
+      const CartContext = createContext(null);
+
+      function CartProvider({ children }) {
+        const [items, setItems] = useState(() => {
+          try {
+            return JSON.parse(localStorage.getItem("pm_cart") || "[]");
+          } catch {
+            return [];
+          }
+        });
+
+        useEffect(() => {
+          localStorage.setItem("pm_cart", JSON.stringify(items));
+        }, [items]);
+
+        const addItem = useCallback((product) => {
+          setItems((prev) => {
+            const existing = prev.find((i) => i.id === product.id);
+            if (existing)
+              return prev.map((i) =>
+                i.id === product.id ? { ...i, qty: i.qty + 1 } : i,
+              );
+            return [...prev, { ...product, qty: 1 }];
+          });
+        }, []);
+
+        const removeItem = useCallback((id) => {
+          setItems((prev) => prev.filter((i) => i.id !== id));
+        }, []);
+
+        const updateQty = useCallback((id, delta) => {
+          setItems((prev) =>
+            prev.map((i) =>
+              i.id === id ? { ...i, qty: Math.max(1, i.qty + delta) } : i,
+            ),
+          );
+        }, []);
+
+        const totalItems = items.reduce((s, i) => s + i.qty, 0);
+        const totalPrice = items.reduce((s, i) => s + i.price * i.qty, 0);
+        const isInCart = (id) => items.some((i) => i.id === id);
+
+        return (
+          <CartContext.Provider
+            value={{
+              items,
+              addItem,
+              removeItem,
+              updateQty,
+              totalItems,
+              totalPrice,
+              isInCart,
+            }}
+          >
+            {children}
+          </CartContext.Provider>
+        );
+      }
+
+      // ─────────────────────────────────────────────
+      // TOAST
+      // ─────────────────────────────────────────────
+      function useToast() {
+        const [toasts, setToasts] = useState([]);
+
+        const show = useCallback((msg, icon = "✓") => {
+          const id = Date.now();
+          setToasts((prev) => [...prev, { id, msg, icon }]);
+          setTimeout(() => {
+            setToasts((prev) =>
+              prev.map((t) => (t.id === id ? { ...t, removing: true } : t)),
+            );
+            setTimeout(
+              () => setToasts((prev) => prev.filter((t) => t.id !== id)),
+              300,
+            );
+          }, 2600);
+        }, []);
+
+        return { toasts, show };
+      }
+
+      function ToastContainer({ toasts }) {
+        return (
+          <div className="toast-wrap">
+            {toasts.map((t) => (
+              <div
+                key={t.id}
+                className={`toast${t.removing ? " removing" : ""}`}
+              >
+                <span style={{ color: "var(--green)" }}>{t.icon}</span>
+                {t.msg}
+              </div>
+            ))}
+          </div>
+        );
+      }
+
+      // ─────────────────────────────────────────────
+      // SKELETON
+      // ─────────────────────────────────────────────
+      function SkeletonCard() {
+        return (
+          <div className="skeleton-card">
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginBottom: "1.2rem",
+              }}
+            >
+              <div
+                className="skel"
+                style={{ width: 48, height: 48, borderRadius: 12 }}
+              />
+              <div
+                className="skel"
+                style={{ width: 60, height: 22, borderRadius: 4 }}
+              />
+            </div>
+            <div
+              className="skel"
+              style={{ height: 16, width: "70%", marginBottom: 8 }}
+            />
+            <div
+              className="skel"
+              style={{ height: 12, width: "95%", marginBottom: 6 }}
+            />
+            <div
+              className="skel"
+              style={{ height: 12, width: "80%", marginBottom: "1.5rem" }}
+            />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <div className="skel" style={{ height: 28, width: 60 }} />
+              <div
+                className="skel"
+                style={{ height: 36, width: 90, borderRadius: 8 }}
+              />
+            </div>
+          </div>
+        );
+      }
+
+      // ─────────────────────────────────────────────
+      // PRODUCT CARD
+      // ─────────────────────────────────────────────
+      function ProductCard({ product, onAdd, animDelay }) {
+        const { isInCart } = useContext(CartContext);
+        const inCart = isInCart(product.id);
+
+        const badgeMap = {
+          popular: ["badge-popular", "Popular"],
+          new: ["badge-new", "New"],
+          sale: ["badge-sale", "Sale"],
+        };
+
+        return (
+          <div
+            className="product-card"
+            style={{ animationDelay: `${animDelay}ms` }}
+          >
+            <div className="card-top">
+              <div
+                className="product-icon"
+                style={{ background: product.iconBg, color: product.iconColor }}
+              >
+                {product.icon}
+              </div>
+              {product.badge && (
+                <div className={`product-badge ${badgeMap[product.badge][0]}`}>
+                  {badgeMap[product.badge][1]}
+                </div>
+              )}
+            </div>
+
+            <div className="product-name">{product.name}</div>
+            <div className="product-desc">{product.description}</div>
+
+            <div className="product-tags">
+              {product.tags.map((tag) => (
+                <span key={tag} className="tag">
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            <div className="card-footer">
+              <div className="price-block">
+                <div className="price">${product.price}</div>
+                <div className="price-note">One-time · Lifetime access</div>
+              </div>
+              <button
+                className={`add-btn${inCart ? " in-cart" : ""}`}
+                onClick={() => !inCart && onAdd(product)}
+              >
+                {inCart ? <>✓ Added</> : <>+ Add</>}
+              </button>
+            </div>
+          </div>
+        );
+      }
+
+      // ─────────────────────────────────────────────
+      // CART ITEM ROW
+      // ─────────────────────────────────────────────
+      function CartItemRow({ item }) {
+        const { removeItem, updateQty } = useContext(CartContext);
+        return (
+          <div className="cart-item">
+            <div
+              className="cart-item-icon"
+              style={{ background: item.iconBg, color: item.iconColor }}
+            >
+              {item.icon}
+            </div>
+            <div className="cart-item-info">
+              <div className="cart-item-name">{item.name}</div>
+              <div className="cart-item-price">${item.price} each</div>
+            </div>
+            <div className="qty-controls">
+              <button
+                className="qty-btn"
+                onClick={() => updateQty(item.id, -1)}
+              >
+                −
+              </button>
+              <span className="qty-num">{item.qty}</span>
+              <button
+                className="qty-btn"
+                onClick={() => updateQty(item.id, +1)}
+              >
+                +
+              </button>
+            </div>
+            <button
+              className="remove-btn"
+              onClick={() => removeItem(item.id)}
+              title="Remove"
+            >
+              ✕
+            </button>
+          </div>
+        );
+      }
+
+      // ─────────────────────────────────────────────
+      // CART DRAWER
+      // ─────────────────────────────────────────────
+      function CartDrawer({ onClose }) {
+        const { items, totalItems, totalPrice } = useContext(CartContext);
+
+        return (
+          <>
+            <div className="drawer-overlay" onClick={onClose} />
+            <div
+              className="drawer"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Shopping cart"
+            >
+              <div className="drawer-header">
+                <div>
+                  <div className="drawer-title">Your Cart</div>
+                  <div className="drawer-count">
+                    {totalItems} item{totalItems !== 1 ? "s" : ""}
+                  </div>
+                </div>
+                <button className="close-btn" onClick={onClose}>
+                  ✕
+                </button>
+              </div>
+
+              {items.length === 0 ? (
+                <div className="cart-empty">
+                  <div className="cart-empty-icon">🛒</div>
+                  <div className="cart-empty-title">Your cart is empty</div>
+                  <div className="cart-empty-sub">
+                    Browse products and add them here.
+                  </div>
+                </div>
+              ) : (
+                <div className="drawer-items">
+                  {items.map((item) => (
+                    <CartItemRow key={item.id} item={item} />
+                  ))}
+                </div>
+              )}
+
+              <div className="drawer-footer">
+                <div className="total-row">
+                  <span className="total-label">Total</span>
+                  <span className="total-amount">${totalPrice.toFixed(2)}</span>
+                </div>
+                <button className="checkout-btn" disabled={items.length === 0}>
+                  Proceed to Checkout →
+                </button>
+                <div className="secure-note">
+                  🔒 Secure checkout · Instant download
+                </div>
+              </div>
+            </div>
+          </>
+        );
+      }
+
+      // ─────────────────────────────────────────────
+      // HEADER
+      // ─────────────────────────────────────────────
+      function Header({ onCartOpen, onNavFilter, onBundles }) {
+        const { totalItems } = useContext(CartContext);
+        const [bumping, setBumping] = useState(false);
+        const prevTotal = useRef(totalItems);
+
+        useEffect(() => {
+          if (totalItems > prevTotal.current) {
+            setBumping(true);
+            setTimeout(() => setBumping(false), 400);
+          }
+          prevTotal.current = totalItems;
+        }, [totalItems]);
+
+        const scrollToProducts = () => {
+          document
+            .getElementById("products")
+            ?.scrollIntoView({ behavior: "smooth" });
+        };
+
+        return (
+          <header className="header">
+            <a
+              href="#hero"
+              className="logo"
+              aria-label="PixelMarket – back to top"
+            >
+              <div className="logo-mark">✦</div>
+              PixelMarket
+            </a>
+            <nav className="nav-links" aria-label="Main navigation">
+              <button
+                className="nav-link"
+                onClick={scrollToProducts}
+                aria-label="Browse all products"
+              >
+                Browse
+              </button>
+              <button
+                className="nav-link"
+                onClick={() => {
+                  onNavFilter("Templates");
+                  scrollToProducts();
+                }}
+                aria-label="Filter by Templates"
+              >
+                Templates
+              </button>
+              <button
+                className="nav-link"
+                onClick={onBundles}
+                aria-label="View Bundles – coming soon"
+              >
+                Bundles
+              </button>
+              <button
+                className="cart-trigger"
+                onClick={onCartOpen}
+                aria-label={`Open cart, ${totalItems} item${totalItems !== 1 ? "s" : ""}`}
+              >
+                🛒 Cart
+                <span
+                  className={`cart-badge${bumping ? " bump" : ""}`}
+                  aria-hidden="true"
+                >
+                  {totalItems}
+                </span>
+              </button>
+            </nav>
+          </header>
+        );
+      }
+
+      // ─────────────────────────────────────────────
+      // HERO
+      // ─────────────────────────────────────────────
+      function Hero({ onBrowse, onBundles }) {
+        return (
+          <section className="hero" id="hero">
+            <div className="hero-glow" />
+            <div className="hero-glow2" />
+            <div className="hero-chip">New releases weekly</div>
+            <h1>
+              Assets built for
+              <br />
+              <span className="grad">modern interfaces</span>
+            </h1>
+            <p className="hero-sub">
+              Premium UI kits, templates & design resources for developers and
+              designers who ship fast.
+            </p>
+            <div className="hero-btns">
+              <button className="btn-primary" onClick={onBrowse}>
+                Browse Products
+              </button>
+              <button className="btn-ghost" onClick={onBundles}>
+                View Bundles →
+              </button>
+            </div>
+          </section>
+        );
+      }
+
+      // ─────────────────────────────────────────────
+      // STATS
+      // ─────────────────────────────────────────────
+      function StatsBar() {
+        const stats = [
+          ["500+", "Design Files"],
+          ["12K", "Customers"],
+          ["4.9★", "Avg Rating"],
+          ["Free", "Updates Forever"],
+        ];
+        return (
+          <div className="stats-bar">
+            {stats.map(([num, label]) => (
+              <div key={label} className="stat">
+                <div className="stat-num">{num}</div>
+                <div className="stat-label">{label}</div>
+              </div>
+            ))}
+          </div>
+        );
+      }
+
+      // ─────────────────────────────────────────────
+      // PRODUCTS SECTION
+      // ─────────────────────────────────────────────
+      function ProductsSection({ onAdd, category, setCategory }) {
+        const [search, setSearch] = useState("");
+        const [loading, setLoading] = useState(true);
+
+        useEffect(() => {
+          const t = setTimeout(() => setLoading(false), 900);
+          return () => clearTimeout(t);
+        }, []);
+
+        const filtered = PRODUCTS.filter((p) => {
+          const matchCat = category === "All" || p.category === category;
+          const matchSearch =
+            p.name.toLowerCase().includes(search.toLowerCase()) ||
+            p.description.toLowerCase().includes(search.toLowerCase());
+          return matchCat && matchSearch;
+        });
+
+        return (
+          <section className="products-section" id="products">
+            <div className="section-top">
+              <div>
+                <div className="section-label">Featured Products</div>
+                <div className="section-sub">
+                  Handpicked for quality and usability
+                </div>
+              </div>
+              <div className="search-wrap">
+                <div className="search-box">
+                  <span className="search-icon">🔍</span>
+                  <input
+                    className="search-input"
+                    placeholder="Search products..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                </div>
+                <div className="filter-pills">
+                  {CATEGORIES.map((cat) => (
+                    <button
+                      key={cat}
+                      className={`pill${category === cat ? " active" : ""}`}
+                      onClick={() => setCategory(cat)}
+                    >
+                      {cat}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="product-grid">
+              {loading ? (
+                Array.from({ length: 6 }).map((_, i) => (
+                  <SkeletonCard key={i} />
+                ))
+              ) : filtered.length === 0 ? (
+                <div className="empty-state">
+                  <div className="empty-icon">🔍</div>
+                  <div className="empty-title">No products found</div>
+                  <div className="empty-sub">
+                    Try a different search or category
+                  </div>
+                </div>
+              ) : (
+                filtered.map((p, i) => (
+                  <ProductCard
+                    key={p.id}
+                    product={p}
+                    onAdd={onAdd}
+                    animDelay={i * 60}
+                  />
+                ))
+              )}
+            </div>
+          </section>
+        );
+      }
+
+      // ─────────────────────────────────────────────
+      // FOOTER
+      // ─────────────────────────────────────────────
+      function Footer({ onNavFilter }) {
+        const scrollToProducts = (cat) => {
+          if (cat) onNavFilter(cat);
+          document
+            .getElementById("products")
+            ?.scrollIntoView({ behavior: "smooth" });
+        };
+
+        const footerCols = [
+          {
+            heading: "Products",
+            links: [
+              { label: "UI Kits", action: () => scrollToProducts("UI Kits") },
+              {
+                label: "Templates",
+                action: () => scrollToProducts("Templates"),
+              },
+              { label: "Icons", action: () => scrollToProducts("Icons") },
+              { label: "Browse All", action: () => scrollToProducts(null) },
+            ],
+          },
+          {
+            heading: "Company",
+            links: [
+              { label: "About", href: "#about" },
+              { label: "Blog", href: "#blog" },
+              { label: "Changelog", href: "#changelog" },
+              { label: "Affiliate", href: "#affiliate" },
+            ],
+          },
+          {
+            heading: "Support",
+            links: [
+              { label: "Documentation", href: "#docs" },
+              { label: "FAQ", href: "#faq" },
+              { label: "Contact", href: "#contact" },
+              { label: "Refund Policy", href: "#refund" },
+            ],
+          },
+          {
+            heading: "Legal",
+            links: [
+              { label: "Privacy Policy", href: "#privacy" },
+              { label: "Terms of Use", href: "#terms" },
+              { label: "License", href: "#license" },
+              { label: "Cookies", href: "#cookies" },
+            ],
+          },
+        ];
+
+        return (
+          <footer className="footer">
+            <div className="footer-top">
+              <div className="footer-brand">
+                <a
+                  href="#hero"
+                  className="footer-logo"
+                  aria-label="PixelMarket – back to top"
+                >
+                  <div className="footer-logo-mark" aria-hidden="true" />
+                  PixelMarket
+                </a>
+                <p className="footer-tagline">
+                  Premium UI kits, templates &amp; design
+                  <br />
+                  resources for developers who ship.
+                </p>
+                <div className="footer-socials" aria-label="Social links">
+                  {[
+                    { icon: "𝕏", label: "X / Twitter", href: "#twitter" },
+                    { icon: "in", label: "LinkedIn", href: "#linkedin" },
+                    { icon: "⌥", label: "GitHub", href: "#github" },
+                  ].map(({ icon, label, href }) => (
+                    <a
+                      key={label}
+                      href={href}
+                      className="social-btn"
+                      aria-label={label}
+                      title={label}
+                    >
+                      {icon}
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              <nav className="footer-cols" aria-label="Footer navigation">
+                {footerCols.map((col) => (
+                  <div key={col.heading} className="footer-col">
+                    <h3 className="footer-col-heading">{col.heading}</h3>
+                    <ul className="footer-col-links" role="list">
+                      {col.links.map(({ label, href, action }) => (
+                        <li key={label}>
+                          {action ? (
+                            <button
+                              className="footer-link"
+                              onClick={action}
+                              aria-label={`Browse ${label}`}
+                            >
+                              {label}
+                            </button>
+                          ) : (
+                            <a
+                              className="footer-link"
+                              href={href}
+                              aria-label={label}
+                            >
+                              {label}
+                            </a>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </nav>
+            </div>
+
+            <div className="footer-bottom">
+              <span>© 2026 PixelMarket. All rights reserved.</span>
+              <span className="footer-bottom-links">
+                <a href="#privacy" className="footer-link-sm">
+                  Privacy
+                </a>
+                <span aria-hidden="true">·</span>
+                <a href="#terms" className="footer-link-sm">
+                  Terms
+                </a>
+                <span aria-hidden="true">·</span>
+                <a href="#sitemap" className="footer-link-sm">
+                  Sitemap
+                </a>
+              </span>
+            </div>
+          </footer>
+        );
+      }
+
+      // ─────────────────────────────────────────────
+      // APP
+      // ─────────────────────────────────────────────
+      function App() {
+        const [cartOpen, setCartOpen] = useState(false);
+        const { toasts, show: showToast } = useToast();
+
+        const handleAdd = useCallback(
+          (product) => {
+            showToast(`"${product.name}" added to cart`);
+          },
+          [showToast],
+        );
+
+        const handleBundlesClick = useCallback(() => {
+          showToast("Bundles coming soon! 🎁", "✦");
+        }, [showToast]);
+
+        return (
+          <CartProvider>
+            <AppInner
+              cartOpen={cartOpen}
+              setCartOpen={setCartOpen}
+              handleAdd={handleAdd}
+              handleBundlesClick={handleBundlesClick}
+              toasts={toasts}
+            />
+          </CartProvider>
+        );
+      }
+
+      function AppInner({
+        cartOpen,
+        setCartOpen,
+        handleAdd,
+        handleBundlesClick,
+        toasts,
+      }) {
+        const { addItem } = useContext(CartContext);
+        const [category, setCategory] = useState("All");
+
+        const onAdd = (product) => {
+          addItem(product);
+          handleAdd(product);
+        };
+
+        const handleNavFilter = (cat) => {
+          setCategory(cat || "All");
+        };
+
+        // Close drawer on Escape
+        useEffect(() => {
+          const handler = (e) => {
+            if (e.key === "Escape") setCartOpen(false);
+          };
+          window.addEventListener("keydown", handler);
+          return () => window.removeEventListener("keydown", handler);
+        }, []);
+
+        return (
+          <>
+            <Header
+              onCartOpen={() => setCartOpen(true)}
+              onNavFilter={handleNavFilter}
+              onBundles={handleBundlesClick}
+            />
+            <Hero
+              onBrowse={() =>
+                document
+                  .getElementById("products")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+              onBundles={handleBundlesClick}
+            />
+            <StatsBar />
+            <ProductsSection
+              onAdd={onAdd}
+              category={category}
+              setCategory={setCategory}
+            />
+            <Footer onNavFilter={handleNavFilter} />
+            {cartOpen && <CartDrawer onClose={() => setCartOpen(false)} />}
+            <ToastContainer toasts={toasts} />
+          </>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>

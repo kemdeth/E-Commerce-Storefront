@@ -1,0 +1,935 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to Add Products – PixelMarket Docs</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg: #08080f;
+        --surface: #111118;
+        --surface2: #18181f;
+        --surface3: #202028;
+        --border: rgba(255, 255, 255, 0.07);
+        --border2: rgba(255, 255, 255, 0.12);
+        --accent: #7c6ff7;
+        --accent-dim: rgba(124, 111, 247, 0.15);
+        --green: #34d399;
+        --green-dim: rgba(52, 211, 153, 0.12);
+        --orange: #fb923c;
+        --orange-dim: rgba(251, 146, 60, 0.12);
+        --blue: #38bdf8;
+        --blue-dim: rgba(56, 189, 248, 0.12);
+        --red: #f87171;
+        --red-dim: rgba(248, 113, 113, 0.12);
+        --violet: #c084fc;
+        --text: #eeeef5;
+        --text2: #a0a0c0;
+        --text3: #606080;
+        --radius: 14px;
+        --radius-sm: 8px;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 9999;
+      }
+
+      /* ── HEADER ── */
+      .header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 2.5rem;
+        height: 64px;
+        background: rgba(8, 8, 15, 0.85);
+        backdrop-filter: blur(24px);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .logo {
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        text-decoration: none;
+        color: var(--text);
+      }
+
+      .logo-mark {
+        width: 26px;
+        height: 26px;
+        background: linear-gradient(135deg, var(--accent), #c084fc);
+        border-radius: 7px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+      }
+
+      .header-badge {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: var(--accent-dim);
+        border: 1px solid rgba(124, 111, 247, 0.25);
+        color: #a5a0ff;
+        font-size: 0.75rem;
+        font-weight: 500;
+        padding: 0.28rem 0.75rem;
+        border-radius: 100px;
+      }
+
+      /* ── LAYOUT ── */
+      .page {
+        display: flex;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 2.5rem;
+        gap: 2.5rem;
+      }
+
+      /* ── SIDEBAR ── */
+      .sidebar {
+        width: 220px;
+        flex-shrink: 0;
+        padding: 2.5rem 0;
+        position: sticky;
+        top: 64px;
+        height: calc(100vh - 64px);
+        overflow-y: auto;
+      }
+
+      .sidebar-label {
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--text3);
+        margin-bottom: 0.65rem;
+        padding-left: 0.75rem;
+      }
+
+      .sidebar-links {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+        margin-bottom: 2rem;
+      }
+
+      .sidebar-links a {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.83rem;
+        color: var(--text3);
+        text-decoration: none;
+        padding: 0.45rem 0.75rem;
+        border-radius: var(--radius-sm);
+        border-left: 2px solid transparent;
+        transition: all 0.15s;
+      }
+
+      .sidebar-links a:hover {
+        color: var(--text);
+        background: var(--surface2);
+      }
+
+      .sidebar-links a.active {
+        color: #a5a0ff;
+        background: var(--accent-dim);
+        border-left-color: var(--accent);
+      }
+
+      /* ── MAIN CONTENT ── */
+      .main {
+        flex: 1;
+        min-width: 0;
+        padding: 2.5rem 0 5rem;
+      }
+
+      /* ── PAGE TITLE ── */
+      .page-title-block {
+        margin-bottom: 3rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .page-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: var(--green-dim);
+        border: 1px solid rgba(52, 211, 153, 0.2);
+        color: var(--green);
+        font-size: 0.72rem;
+        font-weight: 600;
+        padding: 0.25rem 0.75rem;
+        border-radius: 100px;
+        letter-spacing: 0.4px;
+        margin-bottom: 1.1rem;
+      }
+
+      .page-title {
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: 2.2rem;
+        letter-spacing: -0.8px;
+        line-height: 1.15;
+        margin-bottom: 0.75rem;
+      }
+
+      .page-title .grad {
+        background: linear-gradient(90deg, var(--accent), #c084fc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .page-subtitle {
+        color: var(--text2);
+        font-size: 0.95rem;
+        font-weight: 300;
+        max-width: 520px;
+        line-height: 1.7;
+      }
+
+      /* ── SECTIONS ── */
+      .doc-section {
+        margin-bottom: 3rem;
+        scroll-margin-top: 80px;
+      }
+
+      .step-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .step-num {
+        width: 30px;
+        height: 30px;
+        background: var(--accent-dim);
+        border: 1px solid rgba(124, 111, 247, 0.25);
+        color: #a5a0ff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 0.8rem;
+        flex-shrink: 0;
+      }
+
+      .step-title {
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 1.1rem;
+        letter-spacing: -0.2px;
+      }
+
+      .doc-text {
+        color: var(--text2);
+        font-size: 0.9rem;
+        line-height: 1.75;
+        margin-bottom: 1.1rem;
+      }
+
+      /* ── CODE BLOCK ── */
+      .code-block {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+        margin-bottom: 1.25rem;
+      }
+
+      .code-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.6rem 1rem;
+        background: var(--surface2);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .code-lang {
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: var(--text3);
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+
+      .copy-btn {
+        background: var(--surface3);
+        border: 1px solid var(--border2);
+        color: var(--text3);
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.72rem;
+        font-weight: 500;
+        padding: 0.25rem 0.65rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+
+      .copy-btn:hover {
+        color: var(--text);
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+      .copy-btn.copied {
+        color: var(--green);
+        border-color: rgba(52, 211, 153, 0.3);
+      }
+
+      pre {
+        padding: 1.25rem 1.25rem;
+        overflow-x: auto;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.82rem;
+        line-height: 1.7;
+        color: var(--text2);
+      }
+
+      /* syntax colors */
+      .c-key {
+        color: #a5a0ff;
+      }
+      .c-str {
+        color: #34d399;
+      }
+      .c-num {
+        color: #fb923c;
+      }
+      .c-cmt {
+        color: var(--text3);
+        font-style: italic;
+      }
+      .c-null {
+        color: #f87171;
+      }
+      .c-punc {
+        color: var(--text3);
+      }
+
+      /* ── TABLE ── */
+      .doc-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.85rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .doc-table th {
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 0.72rem;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        color: var(--text3);
+        text-align: left;
+        padding: 0.6rem 1rem;
+        border-bottom: 1px solid var(--border2);
+      }
+
+      .doc-table td {
+        padding: 0.75rem 1rem;
+        color: var(--text2);
+        border-bottom: 1px solid var(--border);
+        vertical-align: middle;
+      }
+
+      .doc-table tr:last-child td {
+        border-bottom: none;
+      }
+      .doc-table tr:hover td {
+        background: var(--surface2);
+      }
+
+      code {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.8em;
+        background: var(--surface3);
+        color: #a5a0ff;
+        padding: 0.15em 0.45em;
+        border-radius: 4px;
+      }
+
+      /* ── COLOR SWATCHES ── */
+      .swatch-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .swatch {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 0.85rem 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+      }
+
+      .swatch-dot {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        flex-shrink: 0;
+      }
+
+      .swatch-info {
+        min-width: 0;
+      }
+
+      .swatch-name {
+        font-weight: 600;
+        font-size: 0.83rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .swatch-codes {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.7rem;
+        color: var(--text3);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* ── CHECKLIST ── */
+      .checklist {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .checklist li {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 0.75rem 1rem;
+        font-size: 0.87rem;
+        color: var(--text2);
+      }
+
+      .check-icon {
+        width: 20px;
+        height: 20px;
+        border: 1px solid var(--border2);
+        border-radius: 5px;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+
+      /* ── CALLOUT ── */
+      .callout {
+        display: flex;
+        gap: 0.85rem;
+        background: var(--green-dim);
+        border: 1px solid rgba(52, 211, 153, 0.2);
+        border-radius: var(--radius-sm);
+        padding: 1rem 1.1rem;
+        font-size: 0.87rem;
+        color: var(--text2);
+        line-height: 1.65;
+        margin-bottom: 1.25rem;
+      }
+
+      .callout-icon {
+        font-size: 1rem;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+
+      /* ── BADGE PILLS ── */
+      .badge-pill {
+        display: inline-flex;
+        align-items: center;
+        font-size: 0.7rem;
+        font-weight: 600;
+        padding: 0.2rem 0.6rem;
+        border-radius: 4px;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
+      }
+      .bp-popular {
+        background: var(--accent-dim);
+        color: #a5a0ff;
+        border: 1px solid rgba(124, 111, 247, 0.2);
+      }
+      .bp-new {
+        background: var(--green-dim);
+        color: var(--green);
+        border: 1px solid rgba(52, 211, 153, 0.2);
+      }
+      .bp-sale {
+        background: var(--red-dim);
+        color: var(--red);
+        border: 1px solid rgba(248, 113, 113, 0.2);
+      }
+      .bp-null {
+        background: var(--surface3);
+        color: var(--text3);
+        border: 1px solid var(--border);
+      }
+
+      /* ── DIVIDER ── */
+      .divider {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 2.5rem 0;
+      }
+
+      /* ── RESPONSIVE ── */
+      @media (max-width: 768px) {
+        .page {
+          flex-direction: column;
+          padding: 0 1.25rem;
+        }
+        .sidebar {
+          display: none;
+        }
+        .header {
+          padding: 0 1.25rem;
+        }
+        .page-title {
+          font-size: 1.7rem;
+        }
+        .swatch-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header class="header">
+      <a href="/index.html" class="logo">
+        <div class="logo-mark">✦</div>
+        PixelMarket
+      </a>
+      <div class="header-badge">✦ Developer Docs</div>
+    </header>
+
+    <div class="page">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="sidebar-label">On this page</div>
+        <ul class="sidebar-links">
+          <li><a href="#intro" class="active">Overview</a></li>
+          <li><a href="#step1">Step 1 · Template</a></li>
+          <li><a href="#step2">Step 2 · Categories</a></li>
+          <li><a href="#step3">Step 3 · Badges</a></li>
+          <li><a href="#step4">Step 4 · Icon Colors</a></li>
+          <li><a href="#checklist">Checklist</a></li>
+        </ul>
+      </aside>
+
+      <!-- MAIN -->
+      <main class="main">
+        <!-- TITLE -->
+        <div class="page-title-block" id="intro">
+          <div class="page-chip">✦ Reference Guide</div>
+          <h1 class="page-title">
+            How to Add a<br /><span class="grad">New Product</span>
+          </h1>
+          <p class="page-subtitle">
+            All products are stored in a single <code>PRODUCTS</code> array
+            inside <code>index.html</code>. No build step, no external files —
+            just edit and refresh.
+          </p>
+        </div>
+
+        <!-- WHERE TO FIND IT -->
+        <div class="doc-section">
+          <p class="doc-text">
+            Open <code>index.html</code> and find this comment inside the
+            <code>&lt;script&gt;</code> tag:
+          </p>
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">JS</span>
+              <button
+                class="copy-btn"
+                onclick="copyCode(this, '// DATA\nconst PRODUCTS = [ ... ]')"
+              >
+                Copy
+              </button>
+            </div>
+            <pre><span class="c-cmt">// DATA</span>
+<span class="c-key">const</span> PRODUCTS <span class="c-punc">=</span> <span class="c-punc">[</span> <span class="c-cmt">...</span> <span class="c-punc">]</span></pre>
+          </div>
+          <p class="doc-text">
+            Scroll to the end of the array and paste your new product object
+            before the closing <code>]</code>.
+          </p>
+        </div>
+
+        <hr class="divider" />
+
+        <!-- STEP 1 -->
+        <div class="doc-section" id="step1">
+          <div class="step-header">
+            <div class="step-num">1</div>
+            <div class="step-title">Copy the product template</div>
+          </div>
+          <p class="doc-text">
+            Paste this at the end of the <code>PRODUCTS</code> array and fill in
+            your values.
+          </p>
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">JS</span>
+              <button
+                class="copy-btn"
+                onclick="
+                  copyCode(
+                    this,
+                    `{\n  id: 7,\n  name: 'Your Product Name',\n  price: 20,\n  description: 'Short description of what this product includes.',\n  category: 'UI Kits',\n  icon: '🎨',\n  iconBg: 'rgba(52,211,153,0.12)',\n  iconColor: '#34d399',\n  badge: 'new',\n  tags: ['Figma', 'Dark Mode'],\n},`,
+                  )
+                "
+              >
+                Copy
+              </button>
+            </div>
+            <pre><span class="c-punc">{</span>
+  <span class="c-key">id</span><span class="c-punc">:</span> <span class="c-num">7</span><span class="c-punc">,</span>                            <span class="c-cmt">// must be unique — increment from last id</span>
+  <span class="c-key">name</span><span class="c-punc">:</span> <span class="c-str">"Your Product Name"</span><span class="c-punc">,</span>
+  <span class="c-key">price</span><span class="c-punc">:</span> <span class="c-num">20</span><span class="c-punc">,</span>                          <span class="c-cmt">// number only, no $ sign</span>
+  <span class="c-key">description</span><span class="c-punc">:</span> <span class="c-str">"Short description of what this product includes."</span><span class="c-punc">,</span>
+  <span class="c-key">category</span><span class="c-punc">:</span> <span class="c-str">"UI Kits"</span><span class="c-punc">,</span>              <span class="c-cmt">// see Step 2 for valid values</span>
+  <span class="c-key">icon</span><span class="c-punc">:</span> <span class="c-str">"🎨"</span><span class="c-punc">,</span>                        <span class="c-cmt">// any emoji works</span>
+  <span class="c-key">iconBg</span><span class="c-punc">:</span> <span class="c-str">"rgba(52,211,153,0.12)"</span><span class="c-punc">,</span>  <span class="c-cmt">// icon box background — see Step 4</span>
+  <span class="c-key">iconColor</span><span class="c-punc">:</span> <span class="c-str">"#34d399"</span><span class="c-punc">,</span>            <span class="c-cmt">// icon / emoji tint — see Step 4</span>
+  <span class="c-key">badge</span><span class="c-punc">:</span> <span class="c-str">"new"</span><span class="c-punc">,</span>                     <span class="c-cmt">// "popular" | "new" | "sale" | null</span>
+  <span class="c-key">tags</span><span class="c-punc">:</span> <span class="c-punc">[</span><span class="c-str">"Figma"</span><span class="c-punc">,</span> <span class="c-str">"Dark Mode"</span><span class="c-punc">],</span>     <span class="c-cmt">// 2–3 short tags</span>
+<span class="c-punc">},</span></pre>
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <!-- STEP 2 -->
+        <div class="doc-section" id="step2">
+          <div class="step-header">
+            <div class="step-num">2</div>
+            <div class="step-title">Choose the right category</div>
+          </div>
+          <p class="doc-text">
+            The <code>category</code> value controls which filter pill shows the
+            product. It must match exactly — capital letters and spacing
+            included.
+          </p>
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Value to use</th>
+                <th>Shows under filter</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>"UI Kits"</code></td>
+                <td>UI Kits pill</td>
+              </tr>
+              <tr>
+                <td><code>"Templates"</code></td>
+                <td>Templates pill</td>
+              </tr>
+              <tr>
+                <td><code>"Icons"</code></td>
+                <td>Icons pill</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="callout">
+            <span class="callout-icon">💡</span>
+            <span
+              >All three categories also appear under the
+              <strong>All</strong> filter — you never need to add a new category
+              value.</span
+            >
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <!-- STEP 3 -->
+        <div class="doc-section" id="step3">
+          <div class="step-header">
+            <div class="step-num">3</div>
+            <div class="step-title">Pick a badge (or skip it)</div>
+          </div>
+          <p class="doc-text">
+            The <code>badge</code> field shows a small label in the top-right
+            corner of the card. Use <code>null</code> if you don't want one.
+          </p>
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Value</th>
+                <th>Preview</th>
+                <th>Color</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>"popular"</code></td>
+                <td><span class="badge-pill bp-popular">Popular</span></td>
+                <td>Purple</td>
+              </tr>
+              <tr>
+                <td><code>"new"</code></td>
+                <td><span class="badge-pill bp-new">New</span></td>
+                <td>Green</td>
+              </tr>
+              <tr>
+                <td><code>"sale"</code></td>
+                <td><span class="badge-pill bp-sale">Sale</span></td>
+                <td>Red</td>
+              </tr>
+              <tr>
+                <td><code>null</code></td>
+                <td><span class="badge-pill bp-null">No badge</span></td>
+                <td>—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr class="divider" />
+
+        <!-- STEP 4 -->
+        <div class="doc-section" id="step4">
+          <div class="step-header">
+            <div class="step-num">4</div>
+            <div class="step-title">Pick icon colors</div>
+          </div>
+          <p class="doc-text">
+            Copy any pair below directly into <code>iconBg</code> and
+            <code>iconColor</code>. Each pair is already used in the project, so
+            they all look consistent.
+          </p>
+          <div class="swatch-grid">
+            <div class="swatch">
+              <div
+                class="swatch-dot"
+                style="background: rgba(124, 111, 247, 0.15); color: #a5a0ff"
+              >
+                ✦
+              </div>
+              <div class="swatch-info">
+                <div class="swatch-name" style="color: #a5a0ff">Purple</div>
+                <div class="swatch-codes">rgba(124,111,247,0.15) · #a5a0ff</div>
+              </div>
+            </div>
+            <div class="swatch">
+              <div
+                class="swatch-dot"
+                style="background: rgba(52, 211, 153, 0.12); color: #34d399"
+              >
+                ✦
+              </div>
+              <div class="swatch-info">
+                <div class="swatch-name" style="color: #34d399">Green</div>
+                <div class="swatch-codes">rgba(52,211,153,0.12) · #34d399</div>
+              </div>
+            </div>
+            <div class="swatch">
+              <div
+                class="swatch-dot"
+                style="background: rgba(251, 146, 60, 0.12); color: #fb923c"
+              >
+                ✦
+              </div>
+              <div class="swatch-info">
+                <div class="swatch-name" style="color: #fb923c">Orange</div>
+                <div class="swatch-codes">rgba(251,146,60,0.12) · #fb923c</div>
+              </div>
+            </div>
+            <div class="swatch">
+              <div
+                class="swatch-dot"
+                style="background: rgba(248, 113, 113, 0.12); color: #f87171"
+              >
+                ✦
+              </div>
+              <div class="swatch-info">
+                <div class="swatch-name" style="color: #f87171">Red</div>
+                <div class="swatch-codes">rgba(248,113,113,0.12) · #f87171</div>
+              </div>
+            </div>
+            <div class="swatch">
+              <div
+                class="swatch-dot"
+                style="background: rgba(192, 132, 252, 0.12); color: #c084fc"
+              >
+                ✦
+              </div>
+              <div class="swatch-info">
+                <div class="swatch-name" style="color: #c084fc">Violet</div>
+                <div class="swatch-codes">rgba(192,132,252,0.12) · #c084fc</div>
+              </div>
+            </div>
+            <div class="swatch">
+              <div
+                class="swatch-dot"
+                style="background: rgba(56, 189, 248, 0.12); color: #38bdf8"
+              >
+                ✦
+              </div>
+              <div class="swatch-info">
+                <div class="swatch-name" style="color: #38bdf8">Blue</div>
+                <div class="swatch-codes">rgba(56,189,248,0.12) · #38bdf8</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <!-- CHECKLIST -->
+        <div class="doc-section" id="checklist">
+          <div class="step-header">
+            <div class="step-num">✓</div>
+            <div class="step-title">Before you save</div>
+          </div>
+          <p class="doc-text">
+            Run through this quickly before refreshing the browser.
+          </p>
+          <ul class="checklist">
+            <li>
+              <div class="check-icon"></div>
+              <span
+                ><code>id</code> is unique — not used by any other product in
+                the array.</span
+              >
+            </li>
+            <li>
+              <div class="check-icon"></div>
+              <span
+                ><code>category</code> matches one of the 3 valid values exactly
+                (capital letters matter).</span
+              >
+            </li>
+            <li>
+              <div class="check-icon"></div>
+              <span
+                >There is a comma <code>,</code> after the closing
+                <code>}</code> of your object (unless it is the last
+                item).</span
+              >
+            </li>
+            <li>
+              <div class="check-icon"></div>
+              <span
+                ><code>badge</code> is either <code>"popular"</code>,
+                <code>"new"</code>, <code>"sale"</code>, or
+                <code>null</code>.</span
+              >
+            </li>
+            <li>
+              <div class="check-icon"></div>
+              <span
+                ><code>price</code> is a plain number — no <code>$</code> sign,
+                no quotes.</span
+              >
+            </li>
+          </ul>
+          <div class="callout">
+            <span class="callout-icon">⚡</span>
+            <span
+              >No build step needed. Save <code>index.html</code> and refresh
+              the browser — your new product will appear immediately.</span
+            >
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      function copyCode(btn, text) {
+        navigator.clipboard.writeText(text).then(() => {
+          btn.textContent = "Copied!";
+          btn.classList.add("copied");
+          setTimeout(() => {
+            btn.textContent = "Copy";
+            btn.classList.remove("copied");
+          }, 2000);
+        });
+      }
+
+      // Highlight active sidebar link on scroll
+      const sections = document.querySelectorAll(
+        ".doc-section, .page-title-block",
+      );
+      const links = document.querySelectorAll(".sidebar-links a");
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              links.forEach((l) => l.classList.remove("active"));
+              const match = document.querySelector(
+                `.sidebar-links a[href="#${entry.target.id}"]`,
+              );
+              if (match) match.classList.add("active");
+            }
+          });
+        },
+        { rootMargin: "-30% 0px -60% 0px" },
+      );
+
+      sections.forEach((s) => observer.observe(s));
+    </script>
+  </body>
+</html>

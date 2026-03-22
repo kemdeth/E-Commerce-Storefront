@@ -30,6 +30,7 @@ A modern e-commerce storefront for digital products, built as a portfolio projec
 E-Commerce Storefront/
 ├── index.html        ← entire app (React components + styles)
 ├── 404.html          ← SPA fallback for Netlify routing
+
 └── README.md
 ```
 
